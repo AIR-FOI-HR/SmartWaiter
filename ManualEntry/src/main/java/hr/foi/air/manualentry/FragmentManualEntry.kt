@@ -8,10 +8,11 @@ import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_manual_entry.*
 import androidx.lifecycle.lifecycleScope
 import com.example.database.HashCodeListener
+import com.example.database.HashInterface
 import kotlinx.coroutines.launch
 
 
-class FragmentManualEntry : Fragment(R.layout.fragment_manual_entry){
+class FragmentManualEntry : Fragment(R.layout.fragment_manual_entry), HashInterface{
 
 
     private var ListenerCode: HashCodeListener? = null
@@ -35,7 +36,7 @@ class FragmentManualEntry : Fragment(R.layout.fragment_manual_entry){
         }
     }
 
-    override fun onAttach(context: Context) {
+    /*override fun onAttach(context: Context) {
         super.onAttach(context)
         if(context is HashCodeListener) {
             ListenerCode = context
@@ -45,6 +46,15 @@ class FragmentManualEntry : Fragment(R.layout.fragment_manual_entry){
     override fun onDetach() {
         super.onDetach()
         ListenerCode = null
+    }*/
+
+    override fun getFragment(listener: HashCodeListener): Fragment {
+        ListenerCode = listener
+        return this
+    }
+
+    override fun getModuleName(): String {
+        return "Manual Entry"
     }
 
 }
