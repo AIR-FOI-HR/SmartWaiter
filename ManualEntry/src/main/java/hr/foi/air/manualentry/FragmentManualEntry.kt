@@ -36,17 +36,7 @@ class FragmentManualEntry : Fragment(R.layout.fragment_manual_entry), HashInterf
         }
     }
 
-    /*override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if(context is HashCodeListener) {
-            ListenerCode = context
-        }
-    }
 
-    override fun onDetach() {
-        super.onDetach()
-        ListenerCode = null
-    }*/
 
     override fun getFragment(listener: HashCodeListener): Fragment {
         ListenerCode = listener
@@ -54,7 +44,7 @@ class FragmentManualEntry : Fragment(R.layout.fragment_manual_entry), HashInterf
     }
 
     override fun getModuleName(): String {
-        return "Manual Entry"
+        return "manually enter code"
     }
 
 }

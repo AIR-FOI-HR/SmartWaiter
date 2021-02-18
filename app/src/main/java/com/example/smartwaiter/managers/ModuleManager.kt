@@ -4,19 +4,30 @@ import android.app.Activity
 import com.example.database.HashCodeListener
 import com.example.database.HashInterface
 import hr.foi.air.manualentry.FragmentManualEntry
+import androidx.fragment.app.Fragment
+import android.util.Log
+import com.example.qrmodul.QrFragment
 
-class ModuleManager {
-    private lateinit var  modules: MutableList<HashInterface>
-    private lateinit var listener: HashCodeListener
+class ModuleManager (Listener: HashCodeListener){
+    private var  modules: MutableList<HashInterface> = mutableListOf<HashInterface>()
+    private var  moduleNames: MutableList<String> = mutableListOf<String>()
+    private var listener: HashCodeListener = Listener
 
-    fun ModuleManager(Listener: HashCodeListener){
-        listener = Listener
+
+
+    fun loadModules() {
+        modules.add(FragmentManualEntry())
+        modules.add(QrFragment())
+
+        modules.forEach {
+            moduleNames.add(it.getModuleName())
+        }
+    }
+    fun getModule(index : Int):Fragment{
+        return modules[index].getFragment(listener)
     }
 
-    private fun loadModules() {
-        modules.add(FragmentManualEntry())
-        modules.forEach {
-            it.getFragment(listener)
-        }
+    fun ModuleNames():MutableList<String>{
+        return moduleNames
     }
 }
