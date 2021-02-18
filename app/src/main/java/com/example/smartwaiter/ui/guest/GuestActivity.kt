@@ -9,10 +9,8 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -24,7 +22,6 @@ import com.example.database.db.SMDatabase
 import com.example.smartwaiter.R
 import com.example.smartwaiter.ui.auth.MainActivity
 import com.example.smartwaiter.ui.guest.HashHandler.HashHandler
-
 import com.example.smartwaiter.util.startNewActivity
 import com.example.smartwaiter.util.visible
 import hr.foi.air.webservice.model.Stol
@@ -51,6 +48,9 @@ class GuestActivity : AppCompatActivity(), HashCodeListener{
         }
     }
 
+
+
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.guest_options_menu, menu)
         return true
@@ -71,7 +71,9 @@ class GuestActivity : AppCompatActivity(), HashCodeListener{
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp() || super.onSupportNavigateUp()
+        onBackPressed()
+        return true
+        //return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
     private fun setUpNavigation() {
@@ -79,7 +81,7 @@ class GuestActivity : AppCompatActivity(), HashCodeListener{
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_guest) as NavHostFragment
         navController = navHostFragment.findNavController()
 
-        val topLevelDestination = setOf(R.id.qrFragment, R.id.menuGuestFragment)
+        val topLevelDestination = setOf(R.id.menuGuestFragment)
         val appBarConfiguration = AppBarConfiguration(topLevelDestination)
 
         setSupportActionBar(toolbarGuest)
@@ -90,9 +92,10 @@ class GuestActivity : AppCompatActivity(), HashCodeListener{
     private fun visibilityNavElements(navController: NavController) {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.qrFragment,
+
                 R.id.waitMealFragment,
                 R.id.paymentFragment -> toolbarGuest.visible(false)
+
                 else -> toolbarGuest.visible(true)
             }
         }
@@ -127,7 +130,9 @@ class GuestActivity : AppCompatActivity(), HashCodeListener{
                 navController.setGraph(navController.graph, bundle)
 
                  */
-                HashHandler(hash.toString().removePrefix("https://smartwaiter.app/app.php?")).hadnleHash(::ucitanStol)
+                HashHandler(hash.toString().removePrefix("https://smartwaiter.app/app.php?")).hadnleHash(
+                    ::ucitanStol
+                )
 
             } else {
                 // Other NFC Tags
@@ -137,7 +142,7 @@ class GuestActivity : AppCompatActivity(), HashCodeListener{
         }
     }
 
-    fun ucitanStol (stol : Stol){
+    fun ucitanStol(stol: Stol){
         lifecycleScope.launch {
             preferences.saveActiveRestaurant(stol.lokal_id)
             preferences.saveTableId(stol.id_stol)
