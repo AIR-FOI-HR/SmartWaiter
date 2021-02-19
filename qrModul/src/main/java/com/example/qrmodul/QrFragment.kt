@@ -18,12 +18,10 @@ import com.budiyev.android.codescanner.CodeScanner
 import com.budiyev.android.codescanner.CodeScannerView
 import com.budiyev.android.codescanner.DecodeCallback
 import com.example.database.HashCodeListener
+import com.example.database.HashInterface
 
 
-
-
-
-class QrFragment : Fragment(R.layout.fragment_qrscanner) {
+class QrFragment : Fragment(R.layout.fragment_qrscanner), HashInterface {
 
     private lateinit var codeScanner: CodeScanner
 
@@ -31,18 +29,14 @@ class QrFragment : Fragment(R.layout.fragment_qrscanner) {
 
     private var ListenerCode: HashCodeListener? = null
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if(context is HashCodeListener) {
-            ListenerCode = context
-        }
+    override fun getFragment(listener: HashCodeListener): Fragment {
+        ListenerCode = listener
+        return this
     }
 
-    override fun onDetach() {
-        super.onDetach()
-        ListenerCode = null
+    override fun getModuleName(): String {
+        return "scan qr code"
     }
-
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

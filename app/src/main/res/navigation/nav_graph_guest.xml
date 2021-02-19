@@ -87,11 +87,6 @@
         android:id="@+id/mapFragment"
         android:name="com.example.smartwaiter.ui.guest.map.MapFragment"
         android:label="Supported venues" />
-    <fragment
-        android:id="@+id/fragmentManualEntry3"
-        android:name="hr.foi.air.manualentry.FragmentManualEntry"
-        android:label="Ručni unos koda"
-        tools:layout="@layout/fragment_manual_entry"/>
 
     <fragment
         android:id="@+id/rateRestaurant"
@@ -111,16 +106,6 @@
         <action
             android:id="@+id/action_hashHandlerFragment_to_mapFragment"
             app:destination="@id/mapFragment" />
-        <action
-            android:id="@+id/action_hashHandlerFragment_to_fragmentManualEntry3"
-            app:destination="@id/fragmentManualEntry3" />
-        <action
-            android:id="@+id/action_hashHandlerFragment_to_qrFragment"
-            app:destination="@id/qrFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/qrFragment"
-        android:name="com.example.qrmodul.QrFragment"
-        android:label="QrFragment" />
 
 </navigation>
