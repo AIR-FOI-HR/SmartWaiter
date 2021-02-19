@@ -32,7 +32,7 @@ class UserPreferences(
 
     val userType: Flow<String?>
         get() = dataStore.data.map { preferences ->
-            preferences[USER_TYPE]
+            preferences[USER_TYPE] ?: "0"
         }
 
     val orderBucket: Flow<Boolean?>
